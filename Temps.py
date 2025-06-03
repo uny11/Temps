@@ -1,53 +1,67 @@
 
-import requests
-import schedule
-import time,datetime
+import requests  # Para hacer peticiones HTTP a la API
+import logging  # Para registrar eventos en un archivo de log
+import os  
+from datetime import datetime 
 from dotenv import load_dotenv
-import os
-import csv
-
 
 # Cargar API Key desde .env
 load_dotenv()
-API_KEY = os.getenv("METEOCAT_API_KEY")
-COD_ESTACIO = "UG"  # Ejemplo: Barcelona (consulta los códigos en la documentación)
 
-def obtener_datos_meteocat():
-    url = f"https://api.meteocat.gencat.cat/v1/meteo/observacio/estacions/{COD_ESTACIO}/ultimes/24h"
+# Configuración (variables que puedes modificar)
+#DATABASE_URL = 'https://api.meteo.cat/xema/v1/representatives/metadades/municipis/082877/variables/32' #Torrelavit
+#DATABASE_URL = 'https://api.meteo.cat/xema/v1/estacions/WP/metadades' #Canaletes
+DATABASE_URL = 'https://api.meteo.cat/xema/v1/estacions/mesurades/WP/2025/06/02' #totes les dades de una estacio per un dia determinat
+API_KEY = os.getenv('METEOCAT_API_KEY')  # Clave API (mejor desde variable de entorno)
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), 'data')  # Carpeta para guardar datos
+LOG_FILE = os.path.join(os.path.dirname(__file__), 'logs', 'Temps.log')  # Archivo de log
+
+def setup_logging():
+    # Crea los directorios si no existen
+    os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    headers = {
-        "x-api-key": API_KEY
-    }
-    
+    # Configura el sistema de logging
+    logging.basicConfig(
+        filename=LOG_FILE,  # Archivo donde se guardan los logs
+        level=logging.INFO,  # Nivel de detalle (INFO, WARNING, ERROR)
+        format='%(asctime)s - %(levelname)s - %(message)s'  # Formato del log
+    )
+
+def download_data():
     try:
-        response = requests.get(url, headers=headers)
-        datos = response.json()
+        # Escribe en el log que comenzó la descarga
+        logging.info("Iniciando descarga de datos")
         
-        if response.status_code == 200:
-            print("\n🌦️ Datos meteorológicos (Meteocat):")
-            for medicion in datos:
-                variable = medicion["variable"]["nom"]
-                valor = medicion["valor"]
-                data = medicion["data"]
-                print(f"📅 {data} | {variable}: {valor}")
-        else:
-            print(f"❌ Error {response.status_code}: {datos.get('message', 'Sin detalles')}")
-    
+        # Prepara los headers y parámetros para la petición HTTP
+        headers={"Content-Type": "application/json", "X-Api-Key": API_KEY}
+        #params = {'limit': 1000}  # Límite de registros a descargar
+        
+        # Hace la petición GET a la API
+        response = requests.get(DATABASE_URL, headers=headers) #, params=params)
+        response.raise_for_status()  # Lanza error si la petición falló
+        
+        # Genera un nombre de archivo con la fecha/hora actual
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_file = os.path.join(OUTPUT_DIR, f"data_{timestamp}.json")
+        
+        # Guarda los datos en un archivo JSON
+        with open(output_file, 'w') as f:
+            f.write(response.text)
+            
+        # Registra éxito en el log
+        logging.info(f"Datos descargados correctamente en {output_file}")
+        return True
+        
+    except requests.exceptions.RequestException as e:
+        # Captura errores de conexión/HTTP
+        logging.error(f"Error de conexión: {str(e)}")
     except Exception as e:
-        print(f"🚨 Error: {e}")
+        # Captura cualquier otro error inesperado
+        logging.error(f"Error inesperado: {str(e)}")
+    return False
 
-    #guardem les dades en un CSV
-    with open('meteocat_data.csv', 'a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([datetime.now(), variable, valor])
-
-# Configurar periodicidad (ej: cada 30 minutos)
-schedule.every(30).minutes.do(obtener_datos_meteocat)
-
-# Primera ejecución
-obtener_datos_meteocat()
-
-# Bucle infinito
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+if __name__ == "__main__":
+    # Punto de entrada del script
+    setup_logging()  # Configura el sistema de logs
+    download_data()  # Ejecuta la descarga
