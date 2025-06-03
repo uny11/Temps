@@ -1,0 +1,28 @@
+2025-06-03 23:24:51,111 - INFO - Iniciando descarga de datos
+2025-06-03 23:24:51,470 - ERROR - Error de conexión: 403 Client Error: Forbidden for url: https://api.meteo.cat/xema/v1/representatives/metadades/municipis/082877/variables/32?limit=1000
+2025-06-03 23:26:40,987 - INFO - Iniciando descarga de datos
+2025-06-03 23:26:41,221 - ERROR - Error de conexión: 403 Client Error: Forbidden for url: https://api.meteo.cat/xema/v1/representatives/metadades/municipis/082877/variables/32
+2025-06-03 23:30:32,374 - INFO - Iniciando descarga de datos
+2025-06-03 23:30:32,723 - ERROR - Error de conexión: 403 Client Error: Forbidden for url: https://api.meteo.cat/xema/v1/representatives/metadades/municipis/082877/variables/32
+2025-06-03 23:31:12,250 - INFO - Iniciando descarga de datos
+2025-06-03 23:31:12,436 - ERROR - Error de conexión: 403 Client Error: Forbidden for url: https://api.meteo.cat/xema/v1/representatives/metadades/municipis/083054/variables/32
+2025-06-03 23:32:00,590 - INFO - Iniciando descarga de datos
+2025-06-03 23:32:00,854 - ERROR - Error de conexión: 403 Client Error: Forbidden for url: https://api.meteo.cat/xema/v1/representatives/metadades/municipis/083054/variables/32
+2025-06-03 23:37:52,997 - INFO - Iniciando descarga de datos
+2025-06-03 23:37:54,121 - ERROR - Error inesperado: module 'datetime' has no attribute 'now'
+2025-06-03 23:38:28,908 - INFO - Iniciando descarga de datos
+2025-06-03 23:38:29,450 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_233829.json
+2025-06-03 23:41:29,947 - INFO - Iniciando descarga de datos
+2025-06-03 23:41:31,106 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_234131.json
+2025-06-03 23:41:57,352 - INFO - Iniciando descarga de datos
+2025-06-03 23:41:57,833 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_234157.json
+2025-06-03 23:44:00,994 - INFO - Iniciando descarga de datos
+2025-06-03 23:44:01,430 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_234401.json
+2025-06-03 23:46:37,543 - INFO - Iniciando descarga de datos
+2025-06-03 23:46:38,645 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_234638.json
+2025-06-03 23:47:04,364 - INFO - Iniciando descarga de datos
+2025-06-03 23:47:04,727 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_234704.json
+2025-06-03 23:47:47,830 - INFO - Iniciando descarga de datos
+2025-06-03 23:47:48,349 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_234748.json
+2025-06-03 23:52:16,032 - INFO - Iniciando descarga de datos
+2025-06-03 23:52:16,382 - INFO - Datos descargados correctamente en /home/isaac/repos/Temps/data/data_20250603_235216.json
