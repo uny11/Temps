@@ -8,10 +8,13 @@ from dotenv import load_dotenv
 # Cargar API Key desde .env
 load_dotenv()
 
-# Configuración (variables que puedes modificar)
+#Pedir variable de dia
+DIA = input("De quin dia vols recollir les dades? (Exemple: 2025/06/03) : ")
+ESTACIO = input("De quina estacio? (Exemple: WP - Canaletes) : ")
+DATABASE_URL = "https://api.meteo.cat/xema/v1/estacions/mesurades/" + ESTACIO + "/" + DIA
 #DATABASE_URL = 'https://api.meteo.cat/xema/v1/representatives/metadades/municipis/082877/variables/32' #Torrelavit
 #DATABASE_URL = 'https://api.meteo.cat/xema/v1/estacions/WP/metadades' #Canaletes
-DATABASE_URL = 'https://api.meteo.cat/xema/v1/estacions/mesurades/WP/2025/06/02' #totes les dades de una estacio per un dia determinat
+#DATABASE_URL = 'https://api.meteo.cat/xema/v1/estacions/mesurades/WP/2025/06/03' #totes les dades de una estacio per un dia determinat
 API_KEY = os.getenv('METEOCAT_API_KEY')  # Clave API (mejor desde variable de entorno)
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), 'data')  # Carpeta para guardar datos
 LOG_FILE = os.path.join(os.path.dirname(__file__), 'logs', 'Temps.log')  # Archivo de log
